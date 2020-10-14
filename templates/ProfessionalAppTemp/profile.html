@@ -1,0 +1,41 @@
+{% extends 'ProfessionalAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block profile %}
+<div class="" style="height:100px !important;background-image: url(https://images.unsplash.com/photo-1597415884160-da3e81008820?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60); ">
+
+</div>
+<br>
+<div class="row">
+  <div class="col-12 mb-5 position-relative">
+    <h2 class="section-title text-center mb-5">Profile</h2>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+        <h4>Info</h4>
+        <p>U-Sync ID : {{ probj.profid }}</p>
+        <p>U-Sync Service : {{ probj.service }}</p>
+        <p>U-Sync Specialization : {{ probj.subservice }}</p>
+        <p>Name : {{ udobj.name }}</p>
+        <p>Email : {{ userreg.user.username }}</p>
+        <p>Mobile : {{ userreg.mobile}}</p>
+        <p>Aadhar : {{ udobj.aadhar }}</p>
+    </div>
+    <div class="col-lg-6">
+      <h4>Address</h4>
+      <p>Flat : {{ adobj.flat }}</p>
+      <p>Street : {{ adobj.street }}</p>
+      <p>Landmark : {{ adobj.landmark }}</p>
+      <p>City : {{ adobj.city }} , District : {{ adobj.district }} , Pin : {{ adobj.pin }}</p>
+      <p>State : {{ adobj.state }}</p>
+    </div>
+    <div class="col-lg-12 text-center">
+      <a href="/ProfessionalApp/editprofile/"><button type="button" class="btn btn-primary" name="button">Edit Details</button></a>
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}

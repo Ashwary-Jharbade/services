@@ -1,0 +1,95 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block createworkimages %}
+
+<style media="screen">
+  input[type='file']{
+    color:#c2e54f;
+    background-color:white;
+  }
+
+  input[type='file']::-webkit-file-upload-button{
+    background-color:white;
+    border:none;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <h3 class="text-center">Manage Work Images</h3>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 text-left">
+      <h4><u>Total Work Images : {{ count }}</u></h4>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-4 text-center">
+      <h5>Create Wrok Image</h5>
+      <form action="/AdminApp/createworkimages/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <select class="form-control" name="workname" required>
+            {% for i in wobj %}
+              <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+            <input type="file" class="form-control"  name="workimg" accept="image/png, image/jpeg" value="" required>
+        </div>
+        <div class="form-group">
+            <input type="checkbox"  name="workimgascvas" required> Please check above before proceeding.
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary" name="addwork" value="addwork">Add Image</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-8">
+      <div class="col-lg-12">
+        <div class="row">
+          {% for i in obj %}
+            <div class="col-lg-3">
+              <form class="/AdminApp/createworkimages/" method="post" enctype="application/x-www-form-urlencoded">
+                {% csrf_token %}
+                <input type="number" name="workimgid" value="{{ i.id }}" hidden>
+                <button type="button" data-toggle="modal" data-target="#exampleModalCenter{{ i.id }}"   style="border:none;background-color:white;outline:none;"><img src="{{ i.image.url }}" class="img-fluid" alt="img"></button>
+
+                <div class="modal fade" id="exampleModalCenter{{ i.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Delete Clicked Image</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <img src="{{ i.image.url }}" class="img-fluid" alt="img">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="workbutton" value="workbutton" class="btn btn-primary">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endblock %}

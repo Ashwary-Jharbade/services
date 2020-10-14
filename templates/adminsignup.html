@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      {% if message %}
+        alert( '{{ message }}' );
+      {% endif %}
+    </script>
+  </head>
+  <body>
+    <h1>Admin signup page</h1>
+    <form class="" action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="text" name="usertype" value="Admin" hidden>
+      <input type="text" name="mobile" placeholder="Mobile">
+      <input type="text" name="username" placeholder="Enter Gmail" required>
+      <input type="text" name="password" placeholder="Password" required>
+      <input type="text" name="cpassword" placeholder="Confirm Password" required>
+      <input type="submit" name="signupadmin" value="Submit">
+    </form>
+  </body>
+</html>

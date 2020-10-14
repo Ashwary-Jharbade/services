@@ -1,0 +1,31 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block customerresp %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mb-5 position-relative">
+      <br>
+      <h2 class="section-title text-center mb-5">Customer Response</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      {% for i in obj %}
+        <div class="row">
+          <div class="col-lg-12">
+            <hr>
+            {{ i.date }} <br>
+            From : {{ i.first }} {{ i.last }}  &nbsp;  &nbsp; Email : {{ i.email }} <br>
+            Subject : {{ i.subject }} <br>
+            Message : <br> {{ i.message }}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'UserAppTemp/skeleton.html'  %}
+
+{% load static %}
+
+{% block rateservice %}
+
+<script type="text/javascript">
+  function rating(argument) {
+	for(var i=1;i<=5;i++)
+	{
+		if(i<=argument){
+			document.getElementById(i).checked=true;
+		}
+		else{
+			document.getElementById(i).checked=false;
+		}
+	}
+}
+</script>
+
+<style media="screen">
+  .radiostyler{
+    height:40px;
+    width:40px;
+  }
+</style>
+
+<div class="" style="height:100px;background-image: url({% static 'images/hero_bg_1.jpg' %}); ">
+</div>
+<br>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 mb-5 position-relative">
+      <h2 class="section-title text-center mb-5">Rate Professional</h2>
+    </div>
+  </div>
+  <form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-lg-4 offset-lg-4">
+      <div class="text-center" style="box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);padding:15px 0px;">
+        <div class="">
+          <p class="text-center">Your rating always bring best out of us.</p>
+        </div>
+					<input id="1" name="one" class="radiostyler" type="radio"  onclick="rating(1)" required>
+					<input id="2" name="two" class="radiostyler" type="radio" onclick="rating(2)">
+					<input id="3" name="three" class="radiostyler" type="radio" onclick="rating(3)">
+					<input id="4" name="four" class="radiostyler" type="radio" onclick="rating(4)">
+					<input id="5" name="five" class="radiostyler" type="radio" onclick="rating(5)">
+			</div>
+    </div>
+    <div class="col-lg-12 text-center">
+      <br>
+      <a href="/UserApp/rateservice/{{ id }}/"><button type="submit" class="btn btn-primary"  name="button">Submit</button></a>
+    </div>
+  </div>
+  </form>
+</div>
+<br>
+{% endblock %}

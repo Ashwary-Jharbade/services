@@ -1,0 +1,46 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+{% load static %}
+
+{% block serveprof %}
+
+{{ spf }}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <br>
+      <h4>Order</h4>
+    </div>
+    <div class="col-lg-12">
+      {{ ord }}
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12 text-center">
+      <br>
+      <h4>{{ ord.package.subservice }} Professionals</h4>
+    </div>
+    <div class="col-lg-12 text-center">
+      <form class="form-group"  method="post" enctype="multipart/form-data">
+        {% csrf_token  %}
+        <select class="form-control" name="seleprof" required>
+          <option value="Null">None</option>
+          {% for i,j in lis.items %}
+            <option value="{{ i.userreg.id }}">
+              <p>
+                Name : {{ i.name }} <br>
+                Aadhar : {{ i.aadhar }} <br>
+                Phone no. : {{ j.userreg.mobile }} <br>
+                Address :{{ j.area }} ,{{ j.city }} ,{{ j.district }}({{ j.pin }}) ,{{ j.state }}
+              </p>
+            </option>
+          {% endfor %}
+        </select>
+        <br>
+        <a href="/AdminApp/serveprof/{{ ord.id }}/"><button type="submit" class="btn btn-primary" name="button">Select Professional</button></a>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+{% endblock %}

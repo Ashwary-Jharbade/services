@@ -1,0 +1,104 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block createworkselectors %}
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <h3 class="text-center">Manage Work Names & Selectors</h3>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3">
+      <br>
+      <h4 class="text-left">Total Works : {{ count }}</h4>
+      <div class="row" style="height:400px;overflow-x:hidden;">
+        {% for i in obj %}
+          <div class="col-lg-12">
+            <hr>
+            Name : {{ i }} <br>
+            Selector : {{ i.dataselector }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <br>
+      <h4 class="text-center">Update Work</h4>
+      <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group text-center">
+          <small>Select Work</small>
+          <select class="form-control" name="updateservice" required>
+            {% for i in obj %}
+              <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group text-center">
+          <small>New Work Name</small>
+          <input type="text" class="form-control" name="updatedname" placeholder="Updated Work Name" required>
+        </div>
+        <div class="form-group text-center">
+          <small>Updated Seelector</small>
+          <input type="text" class="form-control" name="updatedqty" placeholder="Updated Work Selector" required>
+        </div>
+        <div class="text-center">
+          <input type="checkbox" name="updatecheck" value="" required> Please check before proceeding.
+        </div>
+        <div class="form-group text-center">
+          <a href="/AdminApp/createoffers/"><button type="submit" name="updateservicebutton" value="updateservicebutton" class="btn btn-primary">Update Work</button></a>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-3">
+      <br>
+      <h4 class="text-center">Delete Work</h4>
+      <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group text-center">
+          <small>Select Work</small>
+          <select class="form-control" name="deleteserviceselect" required>
+            {% for i in obj %}
+              <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="text-center">
+          <input type="checkbox" name="deletecheck" value="" required> Please check before proceeding.
+        </div>
+        <div class="form-group text-center">
+          <a href="/AdminApp/createoffers/"><button type="submit" name="deleteservicebutton" value="deleteservicebutton" class="btn btn-primary">Delete Work</button></a>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-3">
+      <br>
+      <h4 class="text-center">Create Work</h4>
+      <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group text-center">
+          <small>New Work Name</small>
+          <input type="text" class="form-control" name="newofferename" placeholder="New Work Name" required>
+        </div>
+        <div class="form-group text-center">
+          <small>New Work Selector</small>
+          <input type="text" class="form-control" name="newofferper" placeholder="New Work Selector" required>
+        </div>
+        <div class="text-center">
+          <input type="checkbox" name="addservicecheck" value="" required> Please check before proceeding.
+        </div>
+        <div class="form-group text-center">
+          <a href="/AdminApp/createoffers/"><button type="submit" name="addservicebutton" value="addservicebutton" class="btn btn-primary">Add Work</button></a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+
+{% endblock %}

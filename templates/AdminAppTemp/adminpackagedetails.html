@@ -1,0 +1,163 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block adminpackagedetails %}
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+<style media="screen">
+  input[type='file']{
+    color:#c2e54f;
+    background-color:white;
+  }
+
+  input[type='file']::-webkit-file-upload-button{
+    background-color:white;
+    border:none;
+  }
+</style>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <h3 class="text-center">Update Package</h3>
+      <br>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="row">
+          <div class="col-lg-8 offset-lg-2 text-center" style="margin:20px 0px">
+            <a href="">
+              <div class="service d-flex h-100">
+                <div class="service-about">
+                  <h3 class="text-center">{{ obj.name }}</h3>
+                  <div class="">
+                    {% if obj.image == None %}
+                      <img src="" class="img-fluid" alt="img">
+                    {% endif %}
+                    {% if obj.image %}
+                      <img src="{{ obj.image.url }}" class="img-fluid" alt="img">
+                    {% endif %}
+                  </div>
+                  <br>
+                  <h5 class="text-left">Price : Rs <del>{{ obj.price }}</del></h5>
+                  <h5>{{ obj.offername }}</h5>
+                  <h5 class="text-left">Offer Price : Rs {{ obj.offerprice }}</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+          <br>
+          <h4 class="text-center">Updation Form</h4>
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group text-center">
+              <small>Package Name</small>
+              <input type="text" class="form-control" name="packname" placeholder="Package Name" value="{{ obj.name }}" required>
+            </div>
+            <!-- <div class="form-group text-center">
+              <small>Package Image</small>
+              <input type="file" class="form-control" name="packimg" placeholder="Package Image" value="{{ obj.image }}" accept="image/png, image/jpeg">
+              <p class="text-center">{{ obj.image }}</p>
+            </div> -->
+            <div class="form-group text-center">
+              <small>Package Type</small>
+              <select class="form-control" name="packtype" required>
+                {% if obj.packagetype  %}
+                <option value="{{ obj.packagetype.id }}" selected>{{ obj.packagetype }}</option>
+                {% endif %}
+                {% for i in ptype %}
+                <option value="{{ i.id }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group text-center">
+              <small>Service</small>
+              <select class="form-control" name="packservice" required>
+                {% if obj.service  %}
+                <option value="{{ obj.service.id }}" selected>{{ obj.service }}</option>
+                {% endif %}
+                {% for i in sm %}
+                <option value="{{ i.id }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group text-center">
+              <small>Sub-Service</small>
+              <select class="form-control" name="packsubservice" required>
+                {% if obj.subservice  %}
+                <option value="{{ obj.subservice.id }}" selected>{{ obj.subservice }}</option>
+                {% endif %}
+                {% for i in ssm %}
+                <option value="{{ i.id }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group text-center">
+              <small>Package Price</small>
+              <input type="number" id="pckprice" class="form-control" name="packprice" placeholder="Package Price" value="{{ obj.price }}" required>
+            </div>
+            <div class="form-group text-center">
+              <small>Offer</small>
+              <select class="form-control" id="pckoffer" name="packoffer" required>
+                {% if obj.offername  %}
+                <option value="{{ obj.offername.id }} {{ obj.offername.offer }}" selected>{{ obj.offername }}</option>
+                {% endif %}
+                {% for i in offobj %}
+                <option value="{{ i.id }} {{ i.offer }}">{{ i }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group text-center">
+              <small>Offer Price</small>
+              <input type="number" id="offprice" class="form-control" name="packofferprice" placeholder="Package Offer Price" value="{{ obj.offerprice }}" required readonly>
+            </div>
+            <div class="form-group text-center">
+              <small>Package Details</small>
+              <textarea name="packdetails" rows="8" cols="80" class="form-control" placeholder="Write details ..." required style="border-radius:0px;resize:none;">{{ obj.details }}</textarea>
+            </div>
+            <div class="form-group text-center">
+              <input type="checkbox" name="csagevasqg" value="" required> Please check before proceeding.
+            </div>
+            <div class="form-group text-center">
+              <a href="/AdminApp/packagedetails/{{id}}/"><button type="submit" class="btn btn-primary" name="packbutton">Update Package</button></a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    y = $( "#pckoffer option:selected" ).val().split(' ');
+    y = parseInt($( "#pckprice" ).val()) - (parseInt(y[1])/100) * parseInt($( "#pckprice" ).val())
+
+    $("#offprice").val(Math.ceil(y));
+
+    $( "#pckprice" ).change(function() {
+      x = $( "#pckoffer option:selected" ).val().split(' ');
+      x = parseInt($( "#pckprice" ).val()) - (parseInt(x[1])/100) * parseInt($( "#pckprice" ).val())
+      $("#offprice").val(Math.ceil(x));
+    });
+
+    $( "#pckoffer" ).change(function() {
+      x = $( "#pckoffer option:selected" ).val().split(' ');
+      x = parseInt($( "#pckprice" ).val()) - (parseInt(x[1])/100) * parseInt($( "#pckprice" ).val())
+      $("#offprice").val(Math.ceil(x));
+    });
+  });
+</script>
+
+{% endblock %}

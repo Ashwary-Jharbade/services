@@ -1,0 +1,152 @@
+{% extends 'AdminAppTemp/skeleton.html' %}
+{% load static %}
+
+{% block createpackages %}
+
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+
+<style media="screen">
+  input[type='file']{
+    color:#c2e54f;
+    background-color:white;
+  }
+
+  input[type='file']::-webkit-file-upload-button{
+    background-color:white;
+    border:none;
+  }
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <br>
+      <h3 class="text-center">Manage Packages</h3>
+      <br><br>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <br>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="text-center">Total Packages : {{ count }} (<a href="#addpackages">Click to add package</a>)</h4>
+        <div class="row">
+          {% for i in obj %}
+          <div class="col-lg-4 col-md-6 col-sm-6 text-center" style="margin:20px 0px">
+            <a href="/AdminApp/packagedetails/{{ i.id }}/">
+              <div class="service d-flex h-100">
+                <div class="service-about">
+                  <h3 class="text-center">{{ i.name }}</h3>
+                  <div class="">
+                    {% if i.image == None %}
+                      <img src="" class="img-fluid" alt="img">
+                    {% endif %}
+                    {% if i.image %}
+                      <img src="{{ i.image.url }}" class="img-fluid" alt="img">
+                    {% endif %}
+                  </div>
+                  <br>
+                  <h5 class="text-left">Price : Rs <del>{{ i.price }}</del></h5>
+                  <h5>{{ i.offername }}</h5>
+                  <h5 class="text-left">Offer Price : Rs {{ i.offerprice }}</h5>
+                </div>
+              </div>
+            </a>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" id="addpackages">
+    <div class="col-lg-6 offset-lg-3">
+      <h4 class="text-center">Add Package</h4>
+      <br>
+      <form  action="/AdminApp/createpackages/" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group text-center">
+          <small>Package Name</small>
+          <input type="text" class="form-control" name="packname" placeholder="Package Name" required>
+        </div>
+        <div class="form-group text-center">
+          <small>Package Image</small>
+          <input type="file" class="form-control" name="packimg" placeholder="Package Image" accept="image/png, image/jpeg" required>
+        </div>
+        <div class="form-group text-center">
+          <small>Package Type</small>
+          <select class="form-control" name="packtype" required>
+            {% for i in ptype %}
+            <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group text-center">
+          <small>Service</small>
+          <select class="form-control" name="packservice" required>
+            {% for i in sm %}
+            <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group text-center">
+          <small>Sub-Service</small>
+          <select class="form-control" name="packsubservice" required>
+            {% for i in ssm %}
+            <option value="{{ i.id }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group text-center">
+          <small>Package Price</small>
+          <input type="number" id="pckprice" class="form-control" name="packprice" placeholder="Package Price" required>
+        </div>
+        <div class="form-group text-center">
+          <small>Offer</small>
+          <select class="form-control" id="pckoffer" name="packoffer" required>
+            {% for i in offobj %}
+            <option value="{{ i.id }} {{ i.offer }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group text-center">
+          <small>Offer Price</small>
+          <input type="number" id="offprice" class="form-control" name="packofferprice" placeholder="Package Offer Price" required readonly>
+        </div>
+        <div class="form-group text-center">
+          <small>Package Details</small>
+          <textarea name="packdetails" rows="8" cols="80" class="form-control" placeholder="Write details ..." required style="border-radius:0px;resize:none;"></textarea>
+        </div>
+        <div class="form-group text-center">
+          <input type="checkbox" name="csagevasqg" value="" required> Please check before proceeding.
+        </div>
+        <div class="form-group text-center">
+          <button type="submit" class="btn btn-primary" name="packbutton">Add Package</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    y = $( "#pckoffer option:selected" ).val().split(' ');
+    y = parseInt($( "#pckprice" ).val()) - (parseInt(y[1])/100) * parseInt($( "#pckprice" ).val())
+    $("#offprice").val(Math.ceil(y));
+
+    $( "#pckprice" ).change(function() {
+      x = $( "#pckoffer option:selected" ).val().split(' ');
+      x = parseInt($( "#pckprice" ).val()) - (parseInt(x[1])/100) * parseInt($( "#pckprice" ).val())
+      $("#offprice").val(Math.ceil(x));
+    });
+
+    $( "#pckoffer" ).change(function() {
+      x = $( "#pckoffer option:selected" ).val().split(' ');
+      x = parseInt($( "#pckprice" ).val()) - (parseInt(x[1])/100) * parseInt($( "#pckprice" ).val())
+      $("#offprice").val(Math.ceil(x));
+    });
+  });
+</script>
+
+{% endblock %}

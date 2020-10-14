@@ -1,0 +1,132 @@
+{% extends 'UserAppTemp/skeleton.html' %}
+
+{% load static %}
+
+{% block packagedesc %}
+
+<style media="screen">
+
+  .middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.cont:hover .image {
+  opacity: 0.3;
+}
+
+.cont:hover .middle {
+  opacity: 1;
+}
+
+.midd{
+transition: .5s ease;
+opacity: 0;
+position: absolute;
+top: 70%;
+left: 50%;
+transform: translate(-50%, -50%);
+-ms-transform: translate(-50%, -50%);
+text-align: center;
+}
+
+.cont:hover .midd {
+  opacity: 1;
+}
+
+</style>
+
+
+<div class="" style="height:100px;background-image: url({% static 'images/hero_bg_1.jpg' %}); ">
+
+</div>
+<br>
+<div class="row">
+  <div class="col-12 mb-5 position-relative">
+    <h2 class="section-title text-center mb-5">Packages</h2>
+  </div>
+</div>
+<section>
+  <div class="container">
+    <div class="row">
+      {% for i in obj %}
+        <div class="cont col-lg-4 text-center" style="margin:20px 0px">
+          <a href="/UserApp/details/{{ i.id }}/">
+            <div class="service d-flex h-100">
+              <div class="service-about">
+                <h3 class="text-center">{{ i.name }}</h3>
+                <div class="">
+                  {% if i.image == None %}
+                    <img src="" class="img-fluid" alt="img">
+                  {% endif %}
+                  {% if i.image %}
+                    <img src="{{ i.image.url }}" class="img-fluid" alt="img">
+                  {% endif %}
+                </div>
+                <br>
+                <h5 class="text-left">Price : Rs <del>{{ i.price }}</del></h5>
+                <h5>{{ i.offername }}</h5>
+                <h5 class="text-left">Offer Price : Rs {{ i.offerprice }}</h5>
+                <div class="middle">
+                  <a href="/UserApp/buypackage/{{ i.id }}/"><button type="button" class="btn btn-primary" name="button">Purchase</button></a>
+                </div>
+                <div class="midd">
+                  <a href="/UserApp/addtocart/{{ i.id }}/"><button type="button" class="btn btn-primary" name="button">Add to Cart</button></a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<div class="row">
+  <div class="col-12 mb-5 position-relative">
+    <h2 class="section-title text-center mb-5">Addons</h2>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <div class="row">
+      {% for i in aobj %}
+        <div class="cont col-lg-4 text-center" style="margin:20px 0px">
+          <a href="/UserApp/details/{{ i.id }}/">
+            <div class="service d-flex h-100">
+              <div class="service-about">
+                <h3 class="text-center">{{ i.name }}</h3>
+                <div class="">
+                  {% if i.image == None %}
+                    <img src="" class="img-fluid" alt="img">
+                  {% endif %}
+                  {% if i.image %}
+                    <img src="{{ i.image.url }}" class="img-fluid" alt="img">
+                  {% endif %}
+                </div>
+                <br>
+                <h5 class="text-left">Price : Rs <del>{{ i.price }}</del></h5>
+                <h5>{{ i.offername }}</h5>
+                <h5 class="text-left">Offer Price : Rs {{ i.offerprice }}</h5>
+                <div class="middle">
+                  <a href="/UserApp/buypackage/{{ i.id }}/"><button type="button" class="btn btn-primary" name="button">Buy Addon</button></a>
+                </div>
+                <div class="midd">
+                  <a href="/UserApp/addtocart/{{ i.id }}/"><button type="button" class="btn btn-primary" name="button">Add to Cart</button></a>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

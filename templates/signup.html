@@ -1,0 +1,151 @@
+{% extends 'skeleton.html' %}
+
+{% load static %}
+{% block usersignup %}
+
+
+<script type="text/javascript">
+  function checkmobile(){
+    var sgb = document.getElementById("sgin");
+    var y = document.getElementById("mobileno").value;
+    var pat = RegExp('\\d{10}');
+    if(y.match(pat)){
+      sgb.disabled = "";
+      if(y.length > 10){
+        document.getElementById("moberror").innerHTML = "Invalid mobile number";
+        sgb.disabled = "True";
+      }
+      else{
+        document.getElementById("moberror").innerHTML = "";
+      }
+    }
+    else{
+      document.getElementById("moberror").innerHTML = "Invalid mobile number";
+      sgb.disabled = "True";
+    }
+  }
+
+  function checkusername(){
+    var sgb = document.getElementById("sgin");
+    var y = document.getElementById("sguser").value;
+    var pat = RegExp('[a-zA-Z0-9.]+[a-zA-Z0-9]+[@]+[g]+[m]+[a]+[i]+[l]+[.]+[c]+[o]+[m]');
+    if(pat.test(y)){
+      sgb.disabled = "";
+      document.getElementById("nameerror").innerHTML = "";
+    }
+    else{
+      document.getElementById("nameerror").innerHTML = "Oopse ! we except gmail id only for username";
+      sgb.disabled = "False";
+    }
+  }
+
+</script>
+
+<div class="site-blocks-cover overlay bg-light" style="height:100px !important;background-image: url(https://images.unsplash.com/photo-1557353425-6c61136de070?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80); ">
+
+</div>
+
+<div class="container">
+  <div class="row justify-content-between">
+    <div class="col-lg-6 offset-lg-3 col-md-6 offset-md-3 col-sm-8 offset-sm-2" style="background-color:transparent;position:relative;margin-top:-400px;;z-index:50;padding:20px;">
+      <div class="" style="background-color:white;padding:20px;box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);">
+        <form action="/SignUp/" method="post" enctype="multipart/form-data" class="form">
+          <div class="row">
+            <div class="col-12 mb-5 position-relative">
+              <h2 class="section-title text-center mb-5">Sign Up</h2>
+            </div>
+          </div>
+
+          {% csrf_token %}
+          <div class="row mb-4">
+            <div class="form-group col-12">
+              <select class="form-control" name="usertype" required>
+                <option value="User" selected>User</option>
+                <option value="Professional">Professional</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="form-group col-12">
+              <input type="text" name="mobile" id="mobileno" onblur="checkmobile()" class="form-control" placeholder="Mobile" required>
+              <small id="moberror" style="color:red;"></small>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="form-group col-12">
+              <input type="email" name="username" id="sguser" onblur="checkusername()" class="form-control" placeholder="Username" required>
+              <small id="nameerror" style="color:red;"></small>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="form-group col-12">
+              <input type="text" name="password"  class="form-control" placeholder="Password" required>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="form-group col-12">
+              <input type="password" name="cpassword" class="form-control" placeholder="Confirm Password" required>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <input type="submit" id="sgin" class="btn btn-primary" value="Sign Up">
+            </div>
+          </div>
+          <br>
+        </form>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <p>If signed up try signing in</p>
+          </div>
+          <div class="col-md-12 text-center">
+            <a href="/SignIn/"><input type="button" class="btn btn-primary" value="Sign In"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="" style="height:100px;">
+
+</div>
+
+{% endblock %}
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script type="text/javascript">
+      {% if message %}
+        alert( '{{ message }}' );
+      {% endif %}
+    </script>
+  </head>
+  <body>
+    <h1>Sign up</h1>
+    <form class="" action="/SignUp/" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <select class="" name="usertype" required>
+        <option value="User" selected>User</option>
+        <option value="Professional">Professional</option>
+      </select>
+      <input type="text" name="mobile" placeholder="Mobile">
+      <input type="text" name="username" placeholder="Enter Gmail" required>
+      <input type="text" name="password" placeholder="Password" required>
+      <input type="text" name="cpassword" placeholder="Confirm Password" required>
+      <input type="submit" name="signupuser" value="Submit">
+    </form>
+    <br>
+    <a href="/SignIn/">Sign In</a>
+
+  </body>
+</html> -->
